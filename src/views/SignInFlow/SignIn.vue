@@ -1,46 +1,50 @@
 <template>
-  <div class="container" :class="{'light-background' : !isDarkMode, 'dark-background': isDarkMode}">
-    <div class="request" :class="{'light-request':isDarkMode, 'dark-request': !isDarkMode}">
-      Don't have a Design+Code HQ account?
-      <router-link to="/request">Request an account</router-link>
-    </div>
+  <div
+    class="container"
+    :class="{ 'light-background': !isDarkMode, 'dark-background': isDarkMode }"
+  >
+    <RequestAccount />
     <div class="login">
       <img src="@/assets/DCHQ.svg" v-if="isDarkMode" />
       <img src="@/assets/DCHQ-dark.svg" v-if="!isDarkMode" />
-      <h4 :class="{'light-text':isDarkMode,'dark-text':!isDarkMode}">Sign into Design+Code HQ</h4>
+      <h4 :class="{ 'light-text': isDarkMode, 'dark-text': !isDarkMode }">
+        Sign into Design+Code HQ
+      </h4>
       <input
-        :class="{'light-field':isDarkMode,'dark-field':!isDarkMode}"
+        :class="{ 'light-field': isDarkMode, 'dark-field': !isDarkMode }"
         type="email"
         placeholder="Email"
       />
       <input
-        :class="{'light-field':isDarkMode,'dark-field':!isDarkMode}"
+        :class="{ 'light-field': isDarkMode, 'dark-field': !isDarkMode }"
         type="password"
         placeholder="Password"
       />
       <button>Sign In</button>
       <router-link
         to="/recover"
-        :class="{'light-text':isDarkMode,'dark-text':!isDarkMode}"
-      >Forgot your password?</router-link>
-      <button @click="toggleDarkMode">Toggle</button>
+        :class="{ 'light-text': isDarkMode, 'dark-text': !isDarkMode }"
+        >Forgot your password?</router-link
+      >
+      <ThemeSwitch />
     </div>
   </div>
 </template>
 
 <script>
+import RequestAccount from "@/components/RequestAccount.vue";
+import ThemeSwitch from "@/components/ThemeSwitch.vue";
 export default {
   name: "SignIn",
-  data() {
-    return {
-      isDarkMode: true
-    };
-  },
-  methods: {
-    toggleDarkMode() {
-      this.isDarkMode = !this.isDarkMode;
-      document.body.style.background = this.isDarkMode ? "#212c4f" : "#f0f3f5";
+
+  computed: {
+    isDarkMode() {
+      return this.$store.getters.isDarkMode;
     }
+  },
+  components: {
+    RequestAccount,
+    ThemeSwitch
   }
 };
 </script>
@@ -71,30 +75,6 @@ export default {
   border: 1px solid rgba(0, 0, 0, 0.2);
   &::placeholder {
     color: rgba(0, 0, 0, 0.3);
-  }
-}
-.request {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  color: rgba(255, 255, 255, 0.2);
-  a {
-    color: white;
-  }
-}
-.light-request {
-  color: rgba(255, 255, 255, 0.3);
-
-  a {
-    color: white;
-  }
-}
-
-.dark-request {
-  color: rgba(0, 0, 0, 0.3);
-
-  a {
-    color: $black;
   }
 }
 .container {
